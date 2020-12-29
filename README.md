@@ -9,6 +9,7 @@ package main
 
 import (
 	"context"
+	"time"
 
 	"github.com/aklinkert/go-gorm-logrus-logger"
 	"github.com/sirupsen/logrus"
@@ -22,7 +23,7 @@ func main() {
 	var dial gorm.Dialector
 
 	db, err := gorm.Open(dial, &gorm.Config{
-		Logger: gormlogruslogger.NewGormLogrusLogger(logger.WithField("component", "gorm")),
+		Logger: gormlogruslogger.NewGormLogrusLogger(logger.WithField("component", "gorm"), 100 * time.Millisecond),
 	})
 
 	if err != nil {
