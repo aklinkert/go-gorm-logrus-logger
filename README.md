@@ -5,7 +5,9 @@
 A [GORM](https://gorm.io/) `logger.Interface` implementation that uses [logrus](https://github.com/sirupsen/logrus) for the actual logging.
 
 - Queries are logged at debug level with the SQL as message and `rows` and `duration` (ms) fields.
-- Failed queries and queries slower than the configured threshold are logged as warnings. `gorm.ErrRecordNotFound` is not logged.
+- Failed queries and queries slower than the configured threshold are logged as warnings.
+- Record not found errors (`gorm.ErrRecordNotFound`, also when wrapped) are never logged, they are expected.
+- A slow query threshold of `0` disables slow query logging. Up to v1.0.0, `0` logged every query as a warning.
 - GORM's own messages are logged at info, warn and error level.
 - `db.Logger.LogMode(...)` (and `db.Debug()`) is honoured, `logger.Silent` turns logging off.
 
@@ -14,6 +16,8 @@ A [GORM](https://gorm.io/) `logger.Interface` implementation that uses [logrus](
 ```sh
 go get github.com/aklinkert/go-gorm-logrus-logger
 ```
+
+Requires Go 1.23 or newer.
 
 ## Usage
 
